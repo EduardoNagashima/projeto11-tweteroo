@@ -14,18 +14,29 @@ const usuarios = [{
 const tweets = [{
 	username: "bobesponja",
 	avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info",
-    tweet: "eu amo o hub",
+  tweet: "eu amo o hub",
 }];
 
 app.post('/sign-up', (req, res)=>{
     const usuario = req.body;
-    usuarios.push(usuario);
+    usuarios.push({
+        username: usuario.username,
+        avatar: usuario.avatar
+    });
     res.send("OK");
 });
 
 app.post('/tweets', (req,res)=>{
     const tweet = req.body;
-    tweets.push(tweet);
+
+    const avatar = usuarios.find(el => el.username === tweet.username);
+    
+    console.log(avatar);
+    tweets.push({
+        username: tweet.username,
+      tweet: tweet.tweet,
+      avatar: avatar.avatar
+    });
     res.send("OK");
 });
 
